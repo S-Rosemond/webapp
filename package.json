@@ -1,0 +1,37 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "combining Quora and twitter in something similar but different. User generated content. Twitter word limit: 280 -- bump number 420",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/S-Rosemond/webapp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/S-Rosemond/webapp/issues"
+  },
+  "homepage": "https://github.com/S-Rosemond/webapp#readme",
+  "dependencies": {
+    "argon2": "^0.26.1",
+    "colors": "^1.4.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.0.0",
+    "express-rate-limit": "^5.1.1",
+    "helmet": "^3.22.0",
+    "hpp": "^0.2.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.6",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
