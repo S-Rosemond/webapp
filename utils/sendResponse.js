@@ -1,5 +1,5 @@
-const sendResponse = (res, data, statusCode = 200) => {
-    res.status(statusCode).json({success: true, data})
-}
+const sendResponse = (res, data, statusCode = 200, success = true, error) => {
+	res.status(statusCode).json({ success, data, error });
+};
 
 module.exports = sendResponse;
