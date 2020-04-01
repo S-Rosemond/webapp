@@ -66,4 +66,18 @@ PostSchema.methods.addComment = async function(newComment) {
 	return newCreatedComment;
 };
 
+PostSchema.methods.updateComment = async function(id, update, commentorId) {
+	const comment = this.comments.id(id);
+
+	if (comment.user.id !== commentorId) {
+		return 'Only the author or authorized users may edit this comment';
+	}
+
+	await comment.set(update);
+	await this.save();
+
+	// return needs testing
+	return comment.populate('body');
+};
+
 module.exports = mongoose.model('Post', PostSchema);

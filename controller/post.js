@@ -47,11 +47,20 @@ exports.deletePost = asyncHandler(async (req, res, next) => {});
 // Comments
 exports.comment = asyncHandler(async (req, res, next) => {
 	const user = await User.findById(req.user.id);
+	const post = await Post.findById(req.params.id);
+	const { body } = req.body;
+	let newComment = {
+		body,
+		avatar: user.avatar,
+		user: req.user.id
+	};
 
-	const post = await Post.find();
+	const comment = post.addComment(newComment);
 
-	post.addComment();
+	sendResponse(res, comment);
 });
+
+exports.updateComment = asyncHandler(async (req, res, next) => {});
 
 exports.deleteComment = asyncHandler(async (req, res, next) => {
 	let deleteReq = await Post.deleteComment(req.params.id, req.user.id);
