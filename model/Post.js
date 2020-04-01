@@ -43,4 +43,27 @@ const PostSchema = new mongoose.Schema({
 	}
 });
 
+// Statics
+PostSchema.statics.deleteComment = async function(id, commentorId) {
+	let comment = this.comments.id(id);
+
+	// In real production non portfolio need admin conditional
+
+	if (comment.user.id !== commentorId || commentorId !== this.user.id)
+		return 'Only the author and an authorized user can delete this post.';
+
+	await comment.remove();
+	await this.save();
+};
+
+// Methods
+PostSchema.methods.addComment = async function(newComment) {
+	await this.comments.push(newComment);
+	await this.save();
+
+	const newCreatedComment = await this.comments[this.comments.length - 1];
+
+	return newCreatedComment;
+};
+
 module.exports = mongoose.model('Post', PostSchema);
