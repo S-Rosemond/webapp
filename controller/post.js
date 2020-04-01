@@ -43,31 +43,3 @@ exports.updatePost = asyncHandler(async (req, res, next) => {
 });
 
 exports.deletePost = asyncHandler(async (req, res, next) => {});
-
-// Comments
-exports.comment = asyncHandler(async (req, res, next) => {
-	const user = await User.findById(req.user.id);
-	const post = await Post.findById(req.params.id);
-	const { body } = req.body;
-	let newComment = {
-		body,
-		avatar: user.avatar,
-		user: req.user.id
-	};
-
-	const comment = post.addComment(newComment);
-
-	sendResponse(res, comment);
-});
-
-exports.updateComment = asyncHandler(async (req, res, next) => {});
-
-exports.deleteComment = asyncHandler(async (req, res, next) => {
-	let deleteReq = await Post.deleteComment(req.params.id, req.user.id);
-
-	if (deleteReq) {
-		return new ErrorResponse(deleteReq, 401);
-	} else {
-		sendResponse(res);
-	}
-});
