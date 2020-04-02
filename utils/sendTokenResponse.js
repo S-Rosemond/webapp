@@ -1,5 +1,5 @@
 const sendTokenResponse = (res, user, statusCode = 200) => {
- const token =   user.signToken;
+ const token =   user.signToken();
 
  /* 
  future ref: 

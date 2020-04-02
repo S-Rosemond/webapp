@@ -4,7 +4,7 @@
   "description": "combining Quora and twitter in something similar but different. User generated content. Twitter word limit: 280 -- bump number 420",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js",
     "start": "node server.js"
   },
   "repository": {

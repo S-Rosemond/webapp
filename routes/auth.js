@@ -8,3 +8,5 @@ const { login, getLoggedUser, logout } = require('../controller/auth');
 router.route('/login').post(rateLimiter, login);
 router.route('/user').get(protect, getLoggedUser);
 router.route('/logout').post(protect, logout);
+
+module.exports = router;

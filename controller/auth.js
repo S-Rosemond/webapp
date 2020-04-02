@@ -1,6 +1,6 @@
 const asyncHandler = require('../middleware/asyncHandler');
 const sendTokenResponse = require('../utils/sendTokenResponse');
-const ErrorResponse = require('../util/ErrorResponse');
+const ErrorResponse = require('../utils/ErrorResponse');
 const User = require('../model/User');
 
 exports.login = asyncHandler(async (params) => {});

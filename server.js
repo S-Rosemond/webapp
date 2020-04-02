@@ -1,5 +1,5 @@
 const express = require('express');
-const connnectDB = require('./config/db');
+const connectDB = require('./config/db');
 const colors = require('colors');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
@@ -26,18 +26,18 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
 app.use(hpp());
-app.use(limiter.bind(1));
+//app.use(limiter);
 app.use(mongoSanitize());
 app.use(xss());
 
 // Routes
 app.use('/api/users', users);
-app.use('/api/auth', auth);
-app.use('/api/post', posts);
+//app.use('/api/auth', auth);
+//app.use('/api/post', posts);
 // Error Handler
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () => {
 	console.log(`Server running on port: ${PORT}`.cyan.bold.underline);
