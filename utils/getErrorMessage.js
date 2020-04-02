@@ -15,6 +15,11 @@ const getErrorMessage = (err) => {
 	}
 	if (err.name === 'ValidationError') {
 		const message = Object.values(err.errors).map((val) => {
+			if (val.kind === 'minlength') {
+				const length = val.message.split(' ').pop();
+				return (val.message = `The password must be minimum length of ${length}`);
+			}
+
 			return val.message;
 		});
 
