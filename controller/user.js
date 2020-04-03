@@ -42,10 +42,53 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 	sendResponse(res, update);
 });
 
-exports.deleteUser = asyncHandler(async (params) => {});
+// Working
+exports.deleteUser = asyncHandler(async (req, res, next) => {
+	// Select is needed otherwise password hash exposed
+	const user = await User.findOneAndDelete(
+		{ _id: req.user.id },
+		{
+			select: 'name email'
+		}
+	);
 
-exports.updatePassword = asyncHandler(async (params) => {});
+	sendResponse(res, user);
+});
 
+exports.loggedInUpdatePassword = asyncHandler(async (req, res, next) => {
+	let { password } = req.body;
+	password = password.toString();
+
+	const user = await User.findByIdAndUpdate(req.user.id, password);
+
+	sendResponse(res, user);
+});
+
+// Alternate deleteUser
+const deleteUserWithConfirmation = asyncHandler(async (req, res, next) => {
+	/* 
+	ask user to enter password before deletion 
+	if password match then delete user
+	
+	*/
+	let { password } = req.body;
+	const user = await User.findById(req.user.id);
+
+	const passwordMatch = await user.matchPassword(password);
+
+	if (!passwordMatch) {
+		return next(new ErrorResponse('Please enter your password to confirm account deletion', 400));
+	}
+
+	await User.findOneAndDelete(
+		{ _id: req.user.id },
+		{
+			select: 'name email'
+		}
+	);
+
+	sendResponse(res);
+});
 /* 
 Not creating profile: not trying to rebuild twitter etc just replicate a chunk 
 */
