@@ -53,10 +53,10 @@ PostSchema.methods.addComment = async function(newComment) {
 	return newCreatedComment;
 };
 
-PostSchema.methods.updateComment = async function(update, id, commentorId) {
+PostSchema.methods.updateComment = async function(update, id, commenterId) {
 	const comment = this.comments.id(id);
 
-	if (comment.user.id !== commentorId) {
+	if (comment.user.id !== commenterId) {
 		return 'Only the author or authorized users may edit this comment';
 	}
 
@@ -67,12 +67,12 @@ PostSchema.methods.updateComment = async function(update, id, commentorId) {
 	return comment.populate('body');
 };
 
-PostSchema.methods.deleteComment = async function(id, commentorId) {
+PostSchema.methods.deleteComment = async function(id, commenterId) {
 	let comment = this.comments.id(id);
 
 	// In real production non portfolio need admin conditional
 
-	if (comment.user.id !== commentorId || commentorId !== this.user.id)
+	if (comment.user.id !== commenterId || commenterId !== this.user.id)
 		return 'Only the author and an authorized user can delete this post.';
 
 	await comment.remove();
