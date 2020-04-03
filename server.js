@@ -32,7 +32,7 @@ app.use(xss());
 
 // Routes
 app.use('/api/users', users);
-//app.use('/api/auth', auth);
+app.use('/api/auth', auth);
 //app.use('/api/post', posts);
 // Error Handler
 app.use(errorHandler);
