@@ -4,7 +4,7 @@ const sendResponse = require('../utils/sendResponse');
 const User = require('../model/User');
 const Post = require('../model/Post');
 
-// working
+// Working
 exports.getPost = asyncHandler(async (req, res, next) => {
 	const post = await Post.findById(req.params.id);
 
@@ -15,7 +15,7 @@ exports.getPost = asyncHandler(async (req, res, next) => {
 	sendResponse(res, post);
 });
 
-// working
+// Working
 exports.postMessage = asyncHandler(async (req, res, next) => {
 	const user = await User.findById(req.user.id);
 

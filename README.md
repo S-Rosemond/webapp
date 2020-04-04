@@ -81,6 +81,7 @@ combining Quora and twitter in something similar but different. User generated c
         1. Register User        - complete
         2. Update User          - complete
         3. Delete User          - complete
+        4. Update Password      - complete
     2. Auth
         1. Login User           - complete
         2. Get Logged In User   - complete
@@ -94,6 +95,9 @@ combining Quora and twitter in something similar but different. User generated c
         1. Post comment
         2. Update comment
         3. Delete Comment
+        4. Like comment
+        5. Unlike comment
+        6. Reply to a comment
 
 ## Optional
 
