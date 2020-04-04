@@ -58,16 +58,28 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
 	sendResponse(res, user);
 });
 
-// needs testing 4/4/2020
+//  Working
 exports.loggedInUpdatePassword = asyncHandler(async (req, res, next) => {
-	let { password } = req.body;
+	// confirm password can be done on front end
+	let { currentPassword, password } = req.body;
+	// could extract toString to make dry...but
 	password = password.toString();
+	currentPassword = currentPassword.toString();
 
-	const user = await User.findByIdAndUpdate(req.user.id, password);
+	let user = await User.findOne({ _id: req.user.id }).select('+password');
+	const currentPasswordMatch = await user.matchPassword(currentPassword);
 
-	sendResponse(res, user);
+	if (!currentPasswordMatch) {
+		return next(new ErrorResponse('The submitted password is incorrect', 400));
+	}
+
+	user.password = password;
+	await user.save();
+
+	sendTokenResponse(res, user);
 });
 
+//------------------------------------------------------
 // Alternate deleteUser
 const deleteUserWithConfirmation = asyncHandler(async (req, res, next) => {
 	/* 

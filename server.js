@@ -31,9 +31,9 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // Routes
-app.use('/api/users', users);
-app.use('/api/auth', auth);
-app.use('/api/post', posts);
+app.use('/api/v1.0/users', users);
+app.use('/api/v1.0/auth', auth);
+app.use('/api/v1.0/post', posts);
 
 // Error Handler
 app.use(errorHandler);

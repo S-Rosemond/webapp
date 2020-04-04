@@ -37,6 +37,8 @@ UserSchema.pre('save', async function(next) {
 	this.password = await argon2.hash(this.password, {
 		type: argon2.argon2id
 	});
+
+	next();
 });
 
 UserSchema.methods.signToken = function() {
