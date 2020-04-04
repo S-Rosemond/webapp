@@ -12,7 +12,7 @@ exports.CommentSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	replies: [ this.CommentSchema ],
+	replies: [ this ],
 	likes: [
 		{
 			user: {

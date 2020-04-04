@@ -36,8 +36,11 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 	don't use
 	await user.updateOne(update); 
 	*/
-	await User.findByIdAndUpdate(req.user.id, update);
-	update = await User.findById(req.user.id);
+
+	// Retest needed 4/4/2020
+	update = await User.findByIdAndUpdate(req.user.id, update, {
+		new: true
+	});
 
 	sendResponse(res, update);
 });
@@ -55,6 +58,7 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
 	sendResponse(res, user);
 });
 
+// needs testing 4/4/2020
 exports.loggedInUpdatePassword = asyncHandler(async (req, res, next) => {
 	let { password } = req.body;
 	password = password.toString();

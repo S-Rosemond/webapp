@@ -24,8 +24,8 @@ exports.updateComment = asyncHandler(async (req, res, next) => {
 
 	let updateRes = await post.updateComment(update, req.params.comment_id, req.user.id);
 
-	if (updateRes) {
-		return new ErrorResponse(updateRes, 401);
+	if (updateRes[0] === false) {
+		return new ErrorResponse(updateRes[1], 401);
 	}
 
 	sendResponse(res, updateRes);

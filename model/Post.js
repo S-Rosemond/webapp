@@ -57,7 +57,7 @@ PostSchema.methods.updateComment = async function(update, id, commenterId) {
 	const comment = this.comments.id(id);
 
 	if (comment.user.id !== commenterId) {
-		return 'Only the author or authorized users may edit this comment';
+		return [ false, 'Only the author or authorized users may edit this comment' ];
 	}
 
 	await comment.set(update);
@@ -71,6 +71,7 @@ PostSchema.methods.deleteComment = async function(id, commenterId) {
 	let comment = this.comments.id(id);
 
 	// In real production non portfolio need admin conditional
+	// this.user.id allows the Original poster to delete comments | may remove
 
 	if (comment.user.id !== commenterId || commenterId !== this.user.id)
 		return 'Only the author and an authorized user can delete this post.';

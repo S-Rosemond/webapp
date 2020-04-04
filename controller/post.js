@@ -4,16 +4,18 @@ const sendResponse = require('../utils/sendResponse');
 const User = require('../model/User');
 const Post = require('../model/Post');
 
+// working
 exports.getPost = asyncHandler(async (req, res, next) => {
 	const post = await Post.findById(req.params.id);
 
 	if (!post) {
-		return new ErrorResponse('The request post does not exist', 404);
+		return next(new ErrorResponse('The request post does not exist', 404));
 	}
 
 	sendResponse(res, post);
 });
 
+// working
 exports.postMessage = asyncHandler(async (req, res, next) => {
 	const user = await User.findById(req.user.id);
 
@@ -32,14 +34,43 @@ exports.postMessage = asyncHandler(async (req, res, next) => {
 	sendResponse(res, post);
 });
 
+// Working
 exports.updatePost = asyncHandler(async (req, res, next) => {
 	let post = await Post.findById(req.params.id);
 
-	if (!post) return new ErrorResponse('Post not found', 404);
+	if (!post) return next(new ErrorResponse('Post not found', 404));
 
-	post = await Post.findByIdAndUpdate(req.params.id, req.body);
+	post = await Post.findByIdAndUpdate(req.params.id, req.body, {
+		new: true
+	});
 
 	sendResponse(res, post);
 });
 
-exports.deletePost = asyncHandler(async (req, res, next) => {});
+// Working.
+exports.deletePost = asyncHandler(async (req, res, next) => {
+	const post = await Post.findById(req.params.id);
+	let postUser = '' + post.user;
+
+	if (postUser !== req.user.id) {
+		return next(new ErrorResponse('Unauthorized Access', 401));
+	}
+
+	await Post.findOneAndDelete({ _id: req.params.id });
+
+	sendResponse(res);
+});
+
+//-----------------------------------------------------------------
+// Alternate update with query timeout
+const altUpdatePost = asyncHandler(async (req, res, next) => {
+	let post = await Post.find({ _id: req.params.id }).maxTimeMS(500);
+
+	if (post.length < 1) return next(new ErrorResponse('Post not found', 404));
+
+	post = await Post.findByIdAndUpdate(req.params.id, req.body, {
+		new: true
+	});
+
+	sendResponse(res, post);
+});

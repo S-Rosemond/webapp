@@ -73,9 +73,27 @@ combining Quora and twitter in something similar but different. User generated c
     -- notes: why is twitter showing user emails with @email ? !important create nickname in backend required: false, use @username as default instead of email
 
     </div>
-    <div>buttons: tweet(post - from following) twts and replies(loads user.post) likes(loads array of post you like) </div>
+    <div>buttons: tweet(post - from following) tweets and replies(loads user.post) likes(loads array of post you like) </div>
     -- notes: buttons load container below -- skipping media
     </container>
+2. 
+    1. USER
+        1. Register User        - complete
+        2. Update User          - complete
+        3. Delete User          - complete
+    2. Auth
+        1. Login User           - complete
+        2. Get Logged In User   - complete
+        3. Logout               - complete
+    3. Post
+        1. get Post             - complete
+        2. Post Message         - complete
+        3. Update Post          - complete
+        4. Delete Post          - complete
+    4. Comment
+        1. Post comment
+        2. Update comment
+        3. Delete Comment
 
 ## Optional
 
