@@ -1,6 +1,7 @@
 const asyncHandler = require('../middleware/asyncHandler');
 const ErrorResponse = require('../utils/ErrorResponse');
 const sendResponse = require('../utils/sendResponse');
+const sendError = require('../utils/sendError');
 const User = require('../model/User');
 const Post = require('../model/Post');
 
@@ -50,4 +51,15 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
 	} else {
 		sendResponse(res);
 	}
+});
+
+exports.likeComment = asyncHandler(async (req, res, next) => {
+	const post = await Post.findById(req.params.id);
+
+	const likes = await post.likeComment(req.params.comment_id, req.user.id);
+
+	sendResponse(res, likes);
+
+	// if (typeof likes === 'number') sendResponse(res, likes);
+	// else sendError(res, likes);
 });

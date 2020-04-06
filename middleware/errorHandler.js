@@ -1,10 +1,10 @@
 const getErrorMessage = require('../utils/getErrorMessage');
-const sendResponse = require('../utils/sendResponse');
+const sendError = require('../utils/sendError');
 
 const errorHandler = (err, req, res, next) => {
 	let error = getErrorMessage(err);
 
-	sendResponse(res, undefined, error.statusCode, false, error.message);
+	sendError(res, error.message, error.statusCode);
 };
 
 module.exports = errorHandler;

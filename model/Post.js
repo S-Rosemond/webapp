@@ -84,7 +84,7 @@ PostSchema.methods.updateComment = async function(update, id, commenterId) {
 };
 
 PostSchema.methods.deleteComment = async function(id, commenterId) {
-	let comment = await this.comments.id(id);
+	const comment = await this.comments.id(id);
 
 	// In real production non portfolio need admin conditional
 	// this.user.id allows the Original poster to delete comments | may remove
@@ -96,5 +96,27 @@ PostSchema.methods.deleteComment = async function(id, commenterId) {
 		return 'Only the author and an authorized user can delete this post.';
 	}
 };
+
+PostSchema.methods.likeComment = async function(id, userId) {
+	const comment = await this.comments.id(id);
+
+	const likeExist = await comment.likes.pull({ user: userId });
+	console.log(likeExist[0].user);
+
+	let exist = !likeExist[0].user ? null : likeExist[0].user.toString() === userId ? 1 : null;
+
+	// Like and unlike | Unlike not working
+	if (exist) {
+		await comment.likes.pull({ user: likeExist[0].id });
+		await this.save();
+	} else {
+		await comment.likes.push({ user: userId });
+		await this.save();
+	}
+
+	return comment.likes;
+};
+
+//PostSchema.methods.likePost
 
 module.exports = mongoose.model('Post', PostSchema);
