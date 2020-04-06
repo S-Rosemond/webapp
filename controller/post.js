@@ -61,6 +61,28 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
 	sendResponse(res);
 });
 
+// Needs testing once logic added on method
+exports.likePost = asyncHandler(async (req, res, next) => {
+	'PLACEHOLDER tmr';
+
+	const post = await Post.findById(req.params.id);
+
+	const likes = await post.likePost(req.user.id);
+
+	sendResponse(res, likes);
+});
+
+// same logic, diff Array
+exports.disLikePost = asyncHandler(async (req, res, next) => {
+	'PLACEHOLDER tmr';
+
+	const post = await Post.findById(req.params.id);
+
+	const disLikes = await post.disLikePost(req.user.id);
+
+	sendResponse(res, likes);
+});
+
 //-----------------------------------------------------------------
 // Alternate update with query timeout
 const altUpdatePost = asyncHandler(async (req, res, next) => {

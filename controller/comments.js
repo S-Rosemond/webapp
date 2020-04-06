@@ -53,13 +53,11 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
 	}
 });
 
+// Working but need to test mult user
 exports.likeComment = asyncHandler(async (req, res, next) => {
 	const post = await Post.findById(req.params.id);
 
 	const likes = await post.likeComment(req.params.comment_id, req.user.id);
 
 	sendResponse(res, likes);
-
-	// if (typeof likes === 'number') sendResponse(res, likes);
-	// else sendError(res, likes);
 });

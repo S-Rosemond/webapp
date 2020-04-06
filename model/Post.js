@@ -106,7 +106,7 @@ PostSchema.methods.likeComment = async function(id, userId) {
 	let exist =
 		likeExist.length < 1 ? null : !likeExist[0].user ? null : likeExist[0].user.toString() === userId ? 1 : null;
 
-	// Like and unlike | like not working
+	// Like and unlike
 	if (exist) {
 		const toRemove = await comment.likes.id({ _id: likeExist[0].id });
 		await toRemove.remove();
@@ -118,6 +118,10 @@ PostSchema.methods.likeComment = async function(id, userId) {
 	return comment.likes;
 };
 
-//PostSchema.methods.likePost
+PostSchema.methods.likePost = async function(userId) {
+	//const UserExist = this.likes.pull({})
+
+	await this.likes.push(userId);
+};
 
 module.exports = mongoose.model('Post', PostSchema);
