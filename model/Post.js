@@ -97,23 +97,24 @@ PostSchema.methods.deleteComment = async function(id, commenterId) {
 	}
 };
 
+// Working
 PostSchema.methods.likeComment = async function(id, userId) {
 	const comment = await this.comments.id(id);
 
 	const likeExist = await comment.likes.pull({ user: userId });
-	console.log(likeExist[0].user);
 
-	let exist = !likeExist[0].user ? null : likeExist[0].user.toString() === userId ? 1 : null;
+	let exist =
+		likeExist.length < 1 ? null : !likeExist[0].user ? null : likeExist[0].user.toString() === userId ? 1 : null;
 
-	// Like and unlike | Unlike not working
+	// Like and unlike | like not working
 	if (exist) {
-		await comment.likes.pull({ user: likeExist[0].id });
-		await this.save();
+		const toRemove = await comment.likes.id({ _id: likeExist[0].id });
+		await toRemove.remove();
 	} else {
 		await comment.likes.push({ user: userId });
-		await this.save();
 	}
 
+	await this.save();
 	return comment.likes;
 };
 
