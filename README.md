@@ -92,14 +92,22 @@ combining Quora and twitter in something similar but different. User generated c
         3. Update Post          - complete
         4. Delete Post          - complete
     4. Comment
-        1. Post comment
-        2. Update comment
-        3. Delete Comment
+        1. Post comment         - complete
+        2. Update comment       - complete
+        3. Delete Comment       - complete
         4. Like comment
         5. Unlike comment
         6. Reply to a comment
 
 ## Optional
+5. Friends List
+    1. send Friend Req
+    2. Receive Friend Req
+    3. Decline | accept Req
+    * Make post private
+    4. Private viewable FList
+6. Followers
+
 
 12. Extra features
 

@@ -10,7 +10,7 @@ exports.CommentSchema = new mongoose.Schema({
 	},
 	body: {
 		type: String,
-		required: true
+		required: [ true, 'Comments cannot be blank' ]
 	},
 	replies: [ this ],
 	likes: [

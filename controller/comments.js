@@ -4,6 +4,7 @@ const sendResponse = require('../utils/sendResponse');
 const User = require('../model/User');
 const Post = require('../model/Post');
 
+// Working
 exports.comment = asyncHandler(async (req, res, next) => {
 	const user = await User.findById(req.user.id);
 	const post = await Post.findById(req.params.id);
@@ -19,25 +20,33 @@ exports.comment = asyncHandler(async (req, res, next) => {
 	sendResponse(res, comment);
 });
 
+// Working
 exports.updateComment = asyncHandler(async (req, res, next) => {
+	const { body } = req.body;
+
+	if (!body.length) {
+		return next(new ErrorResponse('This field cannot be blank'));
+	}
+
 	const post = await Post.findById(req.params.id);
 
-	let updateRes = await post.updateComment(update, req.params.comment_id, req.user.id);
+	let updateRes = await post.updateComment(body, req.params.comment_id, req.user.id);
 
 	if (updateRes[0] === false) {
-		return new ErrorResponse(updateRes[1], 401);
+		return next(new ErrorResponse(updateRes[1], 401));
 	}
 
 	sendResponse(res, updateRes);
 });
 
+// Working
 exports.deleteComment = asyncHandler(async (req, res, next) => {
 	const post = await Post.findById(req.params.id);
 
-	const deleteRes = await post.deleteComment(req.params.comment_id, req.user.id);
+	const deleteError = await post.deleteComment(req.params.comment_id, req.user.id);
 
-	if (deleteRes) {
-		return new ErrorResponse(deleteRes, 401);
+	if (deleteError) {
+		return next(new ErrorResponse(deleteError, 401));
 	} else {
 		sendResponse(res);
 	}

@@ -6,7 +6,7 @@ const { getPost, postMessage, updatePost, deletePost } = require('../controller/
 const { comment, updateComment, deleteComment } = require('../controller/comments');
 
 router.route('/').post(protect, postMessage);
-router.route('/:id').put(protect, updatePost).delete(protect, deletePost).get(protect, getPost);
-router.route('/:id/:comment_id').post(protect, comment).put(protect, updateComment).delete(deleteComment);
+router.route('/:id').get(protect, getPost).post(protect, comment).put(protect, updatePost).delete(protect, deletePost);
+router.route('/:id/:comment_id').put(protect, updateComment).delete(protect, deleteComment);
 
 module.exports = router;
