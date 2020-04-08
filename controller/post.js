@@ -61,26 +61,22 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
 	sendResponse(res);
 });
 
-// Needs testing once logic added on method
+// Working | may change res.data depends on frontend
 exports.likePost = asyncHandler(async (req, res, next) => {
-	'PLACEHOLDER tmr';
-
 	const post = await Post.findById(req.params.id);
 
-	const likes = await post.likePost(req.user.id);
+	const likes = await post.likeDislikePost(req.user.id, 'like');
 
 	sendResponse(res, likes);
 });
 
-// same logic, diff Array
+// Working | same as above review frontend needs
 exports.disLikePost = asyncHandler(async (req, res, next) => {
-	'PLACEHOLDER tmr';
-
 	const post = await Post.findById(req.params.id);
 
-	const disLikes = await post.disLikePost(req.user.id);
+	const disLikes = await post.likeDislikePost(req.user.id, 'dislike');
 
-	sendResponse(res, likes);
+	sendResponse(res, disLikes);
 });
 
 //-----------------------------------------------------------------

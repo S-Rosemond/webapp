@@ -48,7 +48,10 @@ PostSchema.methods.addComment = async function(newComment) {
 	await this.comments.push(newComment);
 	await this.save();
 
+	// Getting the last item in the array maybe a flaw with real users
 	const newCreatedComment = await this.comments[this.comments.length - 1];
+	// Instead get comments by this user then return last one
+	// Comment here for edit
 
 	return newCreatedComment;
 };
@@ -118,10 +121,40 @@ PostSchema.methods.likeComment = async function(id, userId) {
 	return comment.likes;
 };
 
-PostSchema.methods.likePost = async function(userId) {
-	//const UserExist = this.likes.pull({})
+// Working
+PostSchema.methods.likeDislikePost = async function(userId, type) {
+	if (type === 'like') {
+		const dislikeExist = await this.dislikes.id({ _id: userId });
 
-	await this.likes.push(userId);
+		if (dislikeExist) {
+			await dislikeExist.remove();
+		}
+		await this.likes.push(userId);
+	}
+
+	if (type === 'dislike') {
+		const likeExist = await this.likes.id({ _id: userId });
+
+		if (likeExist) {
+			await likeExist.remove();
+		}
+
+		await this.dislikes.push(userId);
+	}
+
+	await this.save();
+
+	/* 
+	For testing only
+	Solution for others should look like this.
+	
+	const response =
+		type === 'like' ? await this.likes.pull({ user: userId }) : await this.dislikes.pull({ user: userId });
+
+	return response; 
+	*/
+
+	return [ this.likes.length, this.dislikes.length ];
 };
 
 module.exports = mongoose.model('Post', PostSchema);
