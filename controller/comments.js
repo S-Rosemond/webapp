@@ -53,11 +53,22 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
 	}
 });
 
-// Working but need to test mult user
+// Working | manually tested - considering jest
 exports.likeComment = asyncHandler(async (req, res, next) => {
 	const post = await Post.findById(req.params.id);
 
 	const likes = await post.likeComment(req.params.comment_id, req.user.id);
 
 	sendResponse(res, likes);
+});
+
+exports.reply = asyncHandler(async (req, res, next) => {
+	const { body } = req.body;
+	const comment = await Post.getComment(req.params.id, req.params.comment_id);
+
+	const data = await comment.addReply(body);
+
+	if (typeof data === 'string') return next(new ErrorResponse(data, 400));
+
+	sendResponse(res, data);
 });

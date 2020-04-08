@@ -3,7 +3,7 @@ const router = express.Router();
 const protect = require('../middleware/protect');
 
 const { getPost, postMessage, updatePost, deletePost, likePost, disLikePost } = require('../controller/post');
-const { comment, updateComment, deleteComment, likeComment } = require('../controller/comments');
+const { comment, updateComment, deleteComment, likeComment, reply } = require('../controller/comments');
 
 router.route('/').post(protect, postMessage);
 
@@ -14,5 +14,7 @@ router.route('/:id/like').post(protect, likePost);
 router.route('/:id/dislike').post(protect, disLikePost);
 
 router.route('/:id/:comment_id').post(protect, likeComment).put(protect, updateComment).delete(protect, deleteComment);
+
+router.route('/:id/:comment_id/reply').post(protect, reply);
 
 module.exports = router;

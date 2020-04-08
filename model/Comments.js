@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-exports.CommentSchema = new mongoose.Schema({
+const CommentSchema = new mongoose.Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'users'
@@ -26,6 +26,28 @@ exports.CommentSchema = new mongoose.Schema({
 		default: Date.now
 	}
 });
+
+/* 
+Not allowing replies to have replies, not implementing recursive routing.
+Add, delete, edit is similar to PostSchema 
+*/
+
+// Methods
+
+/* 
+Error: works but replies does not contain a CommentSchema just string in an array 
+*/
+CommentSchema.methods.addReply = async function(newReply, userId) {
+	if (!newReply) return 'This field cannot be blank';
+
+	await this.replies.push(newReply);
+	await this.parent().save();
+
+	const newCreatedReply = await this.replies.pull({ user: userId });
+	return newCreatedReply;
+};
+
+module.exports = CommentSchema;
 
 /* 
  Twitter allows comments to have comments will have to test this.CommentSchema self nesting.

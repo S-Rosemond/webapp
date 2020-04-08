@@ -91,14 +91,14 @@ combining Quora and twitter in something similar but different. User generated c
         2. Post Message         - complete
         3. Update Post          - complete
         4. Delete Post          - complete
-        5. Like Post
-        6. Dislike Post
+        5. Like Post            - complete
+        6. Dislike Post         - complete
     4. Comment
         1. Post comment         - complete
         2. Update comment       - complete
         3. Delete Comment       - complete
-        4. Like comment         - semi-complete
-        5. Unlike comment       - semi-complete
+        4. Like comment         - complete
+        5. Unlike comment       - complete
         6. Reply to a comment
 
 ## Optional

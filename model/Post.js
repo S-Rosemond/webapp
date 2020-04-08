@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { CommentSchema } = require('./Comments');
+const CommentSchema = require('./Comments');
 
 const PostSchema = new mongoose.Schema({
 	user: {
@@ -42,6 +42,14 @@ const PostSchema = new mongoose.Schema({
 		default: Date.now
 	}
 });
+
+// Statics
+PostSchema.statics.getComment = async function(id, commentId) {
+	const post = await this.find({ _id: id });
+	const comment = post[0].comments.id({ _id: commentId });
+
+	return comment;
+};
 
 // Methods
 PostSchema.methods.addComment = async function(newComment) {
@@ -100,7 +108,7 @@ PostSchema.methods.deleteComment = async function(id, commenterId) {
 	}
 };
 
-// Working
+// Working | review
 PostSchema.methods.likeComment = async function(id, userId) {
 	const comment = await this.comments.id(id);
 
