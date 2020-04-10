@@ -101,7 +101,7 @@ combining Quora and twitter in something similar but different. User generated c
         5. Unlike comment       - complete
     5. Replies
         1. Reply to a comment   - complete
-        2. Edit Reply
+        2. Edit Reply           - complete
         3. Delete Reply
     6. Friends List : Challenge! 
         1. send Friend Req

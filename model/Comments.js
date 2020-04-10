@@ -66,13 +66,13 @@ CommentSchema.methods.addReply = async function(newReply, userId) {
 	return newCreatedReply;
 };
 
-CommentSchema.methods.editReply = async function(newReply, userId, replyId) {
+CommentSchema.methods.editReply = async function(newReply, replyId) {
 	const reply = await this.replies.id({ _id: replyId });
 
 	await reply.set({ body: newReply });
 	await this.parent().save();
 
-	const editedReply = await this.replies.find({ _id: replyId });
+	const editedReply = await this.replies.id(replyId);
 
 	return editedReply;
 };
