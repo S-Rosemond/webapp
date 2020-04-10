@@ -88,3 +88,11 @@ exports.editReply = asyncHandler(async (req, res, next) => {
 
 	sendResponse(res, data);
 });
+
+exports.deleteReply = asyncHandler(async (req, res, next) => {
+	const comment = await Post.getComment(req.params.id, req.params.comment_id);
+
+	comment.deleteReply(req.params.reply_id);
+
+	sendResponse(res);
+});

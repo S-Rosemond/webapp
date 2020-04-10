@@ -77,8 +77,16 @@ CommentSchema.methods.editReply = async function(newReply, replyId) {
 	return editedReply;
 };
 
+// Need testing, rough draft
+CommentSchema.methods.deleteReply = async function(replyId) {
+	const reply = await this.replies.id({ _id: replyId });
+
+	await reply.remove();
+	await this.parent().save();
+};
+
 module.exports = CommentSchema;
 
 /* 
- Twitter allows comments to have comments will have to test this.CommentSchema self nesting.
+ Self nesting doesn't work, routes require recursive matching.
 */
