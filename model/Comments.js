@@ -12,7 +12,19 @@ const CommentSchema = new mongoose.Schema({
 		type: String,
 		required: [ true, 'Comments cannot be blank' ]
 	},
-	replies: [ this ],
+	replies: [
+		{
+			avatar: String,
+			user: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'users'
+			},
+			body: {
+				type: String,
+				required: [ true, 'This field cannot be blank' ]
+			}
+		}
+	],
 	likes: [
 		{
 			user: {
@@ -33,18 +45,36 @@ Add, delete, edit is similar to PostSchema
 */
 
 // Methods
-
-/* 
-Error: works but replies does not contain a CommentSchema just string in an array 
-*/
 CommentSchema.methods.addReply = async function(newReply, userId) {
 	if (!newReply) return 'This field cannot be blank';
 
+	// this return array.length, don't assign to var
 	await this.replies.push(newReply);
 	await this.parent().save();
 
+	/*
+	 From my understand using pull without passing the _id should not delete the item, so far it doesn't.
+	 From mongoose: 
+	 "To remove a document from a subdocument array we may pass an object with a matching _id."
+	 This solution imo is better than getting the last item pushed into the array
+	*/
+
 	const newCreatedReply = await this.replies.pull({ user: userId });
+
+	/* for a real app pull would return an array of all replies made by the user just return the last one. Higher integrity because the array only contains post from x user. This can be handled here or frontend (not sure frontend needs)
+	*/
 	return newCreatedReply;
+};
+
+CommentSchema.methods.editReply = async function(newReply, userId, replyId) {
+	const reply = await this.replies.id({ _id: replyId });
+
+	await reply.set({ body: newReply });
+	await this.parent().save();
+
+	const editedReply = await this.replies.find({ _id: replyId });
+
+	return editedReply;
 };
 
 module.exports = CommentSchema;

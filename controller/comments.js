@@ -4,6 +4,7 @@ const sendResponse = require('../utils/sendResponse');
 const sendError = require('../utils/sendError');
 const User = require('../model/User');
 const Post = require('../model/Post');
+const createPost = require('../utils/createPost');
 
 // Working
 exports.comment = asyncHandler(async (req, res, next) => {
@@ -62,13 +63,27 @@ exports.likeComment = asyncHandler(async (req, res, next) => {
 	sendResponse(res, likes);
 });
 
+// Working updated
 exports.reply = asyncHandler(async (req, res, next) => {
 	const { body } = req.body;
+	const user = await User.findById(req.user.id);
 	const comment = await Post.getComment(req.params.id, req.params.comment_id);
 
-	const data = await comment.addReply(body);
+	const reply = createPost(user, body);
+
+	const data = await comment.addReply(reply);
 
 	if (typeof data === 'string') return next(new ErrorResponse(data, 400));
+
+	sendResponse(res, data);
+});
+
+exports.editReply = asyncHandler(async (req, res, next) => {
+	const { body } = req.body;
+
+	const comment = await Post.getComment(req.params.id, req.params.comment_id);
+
+	const data = await comment.editReply(body, req.params.reply_id);
 
 	sendResponse(res, data);
 });

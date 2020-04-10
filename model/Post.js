@@ -56,10 +56,15 @@ PostSchema.methods.addComment = async function(newComment) {
 	await this.comments.push(newComment);
 	await this.save();
 
-	// Getting the last item in the array maybe a flaw with real users
+	/* 
+	Getting the last item in the array maybe a flaw with real users 
+	(in rare cases I think it could return the wrong user, no evidence just a gut feeling)
+
+	 created this solution before seeing a similar answer on stack overflow. Though I still doubt its reliability.
+	 Leaving as is for ref 
+	 */
 	const newCreatedComment = await this.comments[this.comments.length - 1];
 	// Instead get comments by this user then return last one
-	// Comment here for edit
 
 	return newCreatedComment;
 };

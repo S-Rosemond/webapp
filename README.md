@@ -99,16 +99,20 @@ combining Quora and twitter in something similar but different. User generated c
         3. Delete Comment       - complete
         4. Like comment         - complete
         5. Unlike comment       - complete
-        6. Reply to a comment
+    5. Replies
+        1. Reply to a comment   - complete
+        2. Edit Reply
+        3. Delete Reply
+    6. Friends List : Challenge! 
+        1. send Friend Req
+        2. Receive Friend Req
+        3. Decline | accept Req  
 
 ## Optional
-5. Friends List
-    1. send Friend Req
-    2. Receive Friend Req
-    3. Decline | accept Req
+6. Friends List
     * Make post private
     4. Private viewable FList
-6. Followers
+7. Followers : conceptually not sure of rules.
 
 
 12. Extra features
