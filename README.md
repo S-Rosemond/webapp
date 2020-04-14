@@ -70,8 +70,6 @@ combining Quora and twitter in something similar but different. User generated c
     <button> Edit profile </button>
     {name} {@email -minus.com} {dateCreated-- a.k.a join date} {following} {followers} 
 
-    -- notes: why is twitter showing user emails with @email ? !important create nickname in backend required: false, use @username as default instead of email
-
     </div>
     <div>buttons: tweet(post - from following) tweets and replies(loads user.post) likes(loads array of post you like) </div>
     -- notes: buttons load container below -- skipping media
@@ -102,8 +100,8 @@ combining Quora and twitter in something similar but different. User generated c
     5. Replies
         1. Reply to a comment   - complete
         2. Edit Reply           - complete
-        3. Delete Reply
-    6. Friends List : Challenge! 
+        3. Delete Reply         - complete
+    6. Friends List : Challenge! start - 4/16/2020
         1. send Friend Req
         2. Receive Friend Req
         3. Decline | accept Req  
@@ -116,4 +114,7 @@ combining Quora and twitter in something similar but different. User generated c
 
 
 12. Extra features
+
+13. Skipped Features | Note
+Small scope project, some features will not implemented such as deleting a user account and handling the cascading effects related to user post/comments/etc, password reset, etc
 

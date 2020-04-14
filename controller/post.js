@@ -3,6 +3,7 @@ const ErrorResponse = require('../utils/ErrorResponse');
 const sendResponse = require('../utils/sendResponse');
 const User = require('../model/User');
 const Post = require('../model/Post');
+const createPost = require('../utils/createPost');
 
 // Working
 exports.getPost = asyncHandler(async (req, res, next) => {
@@ -21,13 +22,7 @@ exports.postMessage = asyncHandler(async (req, res, next) => {
 
 	const { body, title } = req.body;
 
-	let newPost = {
-		body,
-		title,
-		author: user.name,
-		avatar: user.avatar,
-		user: req.user.id
-	};
+	const newPost = createPost(user, body, title);
 
 	const post = await Post.create(newPost);
 

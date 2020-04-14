@@ -11,11 +11,8 @@ exports.comment = asyncHandler(async (req, res, next) => {
 	const user = await User.findById(req.user.id);
 	const post = await Post.findById(req.params.id);
 	const { body } = req.body;
-	let newComment = {
-		body,
-		avatar: user.avatar,
-		user: req.user.id
-	};
+
+	const newComment = createPost(user, body);
 
 	const comment = await post.addComment(newComment);
 
@@ -92,7 +89,9 @@ exports.editReply = asyncHandler(async (req, res, next) => {
 exports.deleteReply = asyncHandler(async (req, res, next) => {
 	const comment = await Post.getComment(req.params.id, req.params.comment_id);
 
-	comment.deleteReply(req.params.reply_id);
+	const deleteRequest = await comment.deleteReply(req.params.reply_id, req.user.id);
 
-	sendResponse(res);
+	if (typeof deleteRequest === 'string') {
+		return next(new ErrorResponse(deleteRequest, 400));
+	} else sendResponse(res);
 });

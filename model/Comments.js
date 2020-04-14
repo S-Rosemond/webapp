@@ -77,12 +77,21 @@ CommentSchema.methods.editReply = async function(newReply, replyId) {
 	return editedReply;
 };
 
-// Need testing, rough draft
-CommentSchema.methods.deleteReply = async function(replyId) {
+// Working deletes correct and only replyId otherwise null res
+CommentSchema.methods.deleteReply = async function(replyId, userId) {
 	const reply = await this.replies.id({ _id: replyId });
 
-	await reply.remove();
-	await this.parent().save();
+	/* 
+	Optional allow commenter to delete reply along with user
+	this.user.toString() === userId ||
+	*/
+
+	if (userId === reply.user.toString()) {
+		await reply.remove();
+		await this.parent().save();
+	} else {
+		return 'Bad request.';
+	}
 };
 
 module.exports = CommentSchema;

@@ -1,8 +1,10 @@
-function createPost(user, body) {
+function createPost(user, body, title) {
 	const post = {
 		user: user.id,
 		avatar: user.avatar,
-		body
+		author: user.name,
+		body,
+		title
 	};
 
 	return post;
