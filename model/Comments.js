@@ -8,6 +8,7 @@ const CommentSchema = new mongoose.Schema({
 	avatar: {
 		type: String
 	},
+	name: String,
 	body: {
 		type: String,
 		required: [ true, 'Comments cannot be blank' ]

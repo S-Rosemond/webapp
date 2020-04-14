@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const FriendSchema = require('./Friend');
 
 const UserSchema = new mongoose.Schema({
 	name: {
@@ -23,6 +24,34 @@ const UserSchema = new mongoose.Schema({
 		minlength: 8,
 		select: false
 	},
+	friendsRequest: [
+		{
+			user: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'users'
+			},
+			name: {
+				type: String,
+				required: true
+			},
+			avatar: String,
+			email: {
+				type: String,
+				required: true
+			},
+			status: {
+				type: String,
+				enum: [ 'pending', 'accepted', 'rejected' ],
+				default: 'pending'
+			},
+			dateCreated: {
+				type: Date,
+				default: Date.now
+			},
+			resubmissionDate: Date
+		}
+	],
+	friendsList: [ FriendSchema ],
 	dateCreated: {
 		type: Date,
 		default: Date.now
@@ -55,6 +84,43 @@ UserSchema.methods.signToken = function() {
 
 UserSchema.methods.matchPassword = async function(userPassword) {
 	return await argon2.verify(this.password, userPassword);
+};
+
+// Delete if using mitigate
+UserSchema.methods.rejectFriendsRequest = async function(id) {
+	const targetReq = await this.friendsRequest.id(id);
+};
+
+// Statics
+UserSchema.statics.mitigateFriendReq = async function(reqId, type) {
+	const oneDay = 24 * 60 * 60 * 1000;
+	const reqExist = await this.friendsRequest.id(reqId);
+	let message;
+
+	if (!reqExist && type !== 'submit') return;
+
+	if (reqExist.status === 'rejected') {
+		const nextSubDate = new Date(reqExist.resubmissionDate);
+
+		message = `You will be able to send a friends request again on ${nextSubDate.toLocaleString()}`;
+	}
+
+	if (type === 'cancel' && reqExist.status !== 'rejected') {
+		const threeDays = oneDay * 3;
+		const preventSpam = new Date(Date.now() + threeDays);
+
+		reqExist.resubmissionDate = preventSpam;
+		message = 'You will be able to send a friends request again in three days';
+
+		//   Alternate code for ref
+		//   const preventSpam = new Date(Date.now())
+		//   preventSpam.setDate(preventSpam.getUTCDate() + 3)
+		//   reqExist.resubmissionDate = preventSpam;
+	}
+
+	await this.save();
+
+	return message;
 };
 
 module.exports = mongoose.model('User', UserSchema);

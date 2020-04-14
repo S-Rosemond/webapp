@@ -101,7 +101,20 @@ combining Quora and twitter in something similar but different. User generated c
         1. Reply to a comment   - complete
         2. Edit Reply           - complete
         3. Delete Reply         - complete
-    6. Friends List : Challenge! start - 4/16/2020
+    6. Friends Request
+        1. Modular or single Method
+        2. add Friends Req
+        3. Cancel Req
+          1. Prevent Req spam:
+             delay subsequent req 
+             to 3 days if not rejected
+        3. Reject Req
+            1. Set subsequent req 
+               delay to 30 days
+        4. Accept Req
+            1. Check Friends List short circuit
+            2. Remove from array
+    7. Friends List : Challenge! start - 4/16/2020 or later
         1. send Friend Req
         2. Receive Friend Req
         3. Decline | accept Req  
