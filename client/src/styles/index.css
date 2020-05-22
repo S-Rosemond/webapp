@@ -1,4 +1,5 @@
 @import 'base/_reset.css';
+@import 'base/_root.css';
 @import 'components/_misc.css';
 @import 'components/_mui-overrides.css';
 @import 'components/_card.css';
