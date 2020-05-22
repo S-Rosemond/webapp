@@ -4,9 +4,18 @@ combining Quora and twitter in something similar but different. User generated c
 
 ## Logged Out
 
-1. Register Page
-    * Single page attempt login/Register
-    * click scroll x between login and Register -- inspired by dribble search register
+1. Card
+    -user Login Component: 
+    * Email Input
+    * Password Input
+    * Register Button
+    * Login Button
+    * User Login Page styling
+    Register Page
+    * Register Login Redirect
+    * Register Form
+    * Register Submit Button
+    * Make the form a single Form that can switch between login/Register, single page -- inspired by dribble search register 
 
 2. Text panel Register page
      * Hear what people are talking about -> Listen and view different perspectives -- needs more thought
@@ -101,6 +110,12 @@ combining Quora and twitter in something similar but different. User generated c
         1. Reply to a comment   - complete
         2. Edit Reply           - complete
         3. Delete Reply         - complete
+
+
+    Update 5/19/2020: I was asked to help in another project. For now I cannot recall
+    my train of thought regarding the Friends system. Therefore, I'll be 
+    abandoning this and moving on to the front-end.
+
     6. Friends Request
         1. Modular or single Method
         2. add Friends Req

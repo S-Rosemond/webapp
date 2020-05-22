@@ -1,0 +1,17 @@
+.register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-input > div > input {
+    min-width: 240px !important;
+}
+
+
+@media (min-width: 768px) {
+    .register-input > div > input {
+        min-width: 360px !important;
+    }
+    
+}
