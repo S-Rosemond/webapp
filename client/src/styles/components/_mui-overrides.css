@@ -1,3 +1,7 @@
 .MuiFilledInput-input {
-    background-color: aliceblue !important;
+	background-color: aliceblue !important;
+}
+
+.MuiButton-root {
+	border-radius: 20px !important;
 }

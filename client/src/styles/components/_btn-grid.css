@@ -1,0 +1,5 @@
+.btn-grid-2 {
+	display: grid;
+	grid-template-areas: "btn-1    btn-2";
+	margin-bottom: 1em;
+}
