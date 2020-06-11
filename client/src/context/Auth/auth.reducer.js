@@ -1,8 +1,6 @@
-export default function(state, action) {
-	const { type, payload } = action;
-
-	switch (type) {
-		default:
-			return state;
-	}
+export default function AuthReducer(state, { type, payload }) {
+  switch (type) {
+    default:
+      return state;
+  }
 }
