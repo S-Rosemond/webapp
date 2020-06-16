@@ -14,6 +14,8 @@ const AuthState = (props) => {
 
   const [state, dispatch] = React.useReducer(AuthReducer, initialState);
 
+  const handleSubmit = () => {};
+
   const registerUser = () => dispatch({ type: REGISTER, payload });
 
   const login = () => dispatch({ type: LOGIN });

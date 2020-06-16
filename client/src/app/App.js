@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Buttons from '../components/buttons/Buttons';
-import Register from './../components/Register/Register';
+import { Register, Login } from '../components';
 import { ThemeProvider } from '@material-ui/core';
 import mainTheme from '../theme/main.theme';
 import CardState from './../context/Card/card.state';
@@ -11,7 +11,7 @@ function App() {
     <ThemeProvider theme={mainTheme}>
       <Router>
         <Switch>
-          <Route exact path='/' component={Buttons} />
+          <Route exact path='/login' component={Login} />
           <CardState>
             <Route exact path='/register' component={Register} />
           </CardState>
