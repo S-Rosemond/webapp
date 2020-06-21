@@ -5,18 +5,21 @@ import { Register, Login } from '../components';
 import { ThemeProvider } from '@material-ui/core';
 import mainTheme from '../theme/main.theme';
 import CardState from './../context/Card/card.state';
+import AuthState from './../context/Auth/auth.state';
 
 function App() {
   return (
     <ThemeProvider theme={mainTheme}>
-      <Router>
-        <Switch>
-          <Route exact path='/login' component={Login} />
-          <CardState>
-            <Route exact path='/register' component={Register} />
-          </CardState>
-        </Switch>
-      </Router>
+      <AuthState>
+        <Router>
+          <Switch>
+            <Route exact path='/login' component={Login} />
+            <CardState>
+              <Route exact path='/register' component={Register} />
+            </CardState>
+          </Switch>
+        </Router>
+      </AuthState>
     </ThemeProvider>
   );
 }

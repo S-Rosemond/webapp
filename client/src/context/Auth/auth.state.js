@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthContext from './auth.context';
 import AuthReducer from './auth.reducer';
-import { REGISTER, LOGIN } from './../types';
+import { REGISTER_SUCCESS, REGISTER_FAILED, LOGIN, LOGOUT } from './../types';
 import chirpsApiCall from './axiosApi';
 
 const AuthState = (props) => {
@@ -21,7 +21,7 @@ const AuthState = (props) => {
   const registerUser = async (formData) => {
     const res = await chirpsApiCall.post('/users/register', formData);
     console.log(res);
-    dispatch({ type: REGISTER, payload: res.data });
+    dispatch({ type: REGISTER_SUCCESS, payload: res.data });
   };
 
   const login = async (formData) => {

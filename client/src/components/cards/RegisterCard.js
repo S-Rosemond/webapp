@@ -6,18 +6,25 @@ import Password from '../inputs/Password';
 import Buttons from './../buttons/Buttons';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/Auth/auth.context';
-import { Watch } from '@material-ui/icons';
 
 const RegisterCard = () => {
   const { register, handleSubmit, errors, watch } = useForm();
 
   const authContext = React.useContext(AuthContext);
-  const { registerUser } = AuthContext;
+  const { registerUser } = authContext;
 
   const onSubmit = (data, event) => {
     event.preventDefault();
 
-    console.log(data);
+    const { name, email, password } = data;
+
+    let formData = {
+      name,
+      email,
+      password,
+    };
+    // note to self: Change backend so all emails are lowercase. I was able to create user with same email but differing case
+    registerUser(formData);
   };
 
   return (
