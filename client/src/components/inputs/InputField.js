@@ -5,7 +5,6 @@ const InputField = ({
   label,
   type,
   helperText,
-  errorMessage,
   variant = 'standard',
   name,
   inputRef,
@@ -22,13 +21,9 @@ const InputField = ({
         label={label}
         variant={variant}
         helperText={
-          errors[name]
-            ? errors[name].message || errorMessage
-            : helperText
-            ? helperText
-            : ' '
+          errors[name] ? errors[name].message : helperText ? helperText : ' '
         }
-        error={errors[name] && true}
+        error={errors[name] ? true : false}
         className='form-input'
         fullWidth
       />

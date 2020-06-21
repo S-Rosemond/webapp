@@ -5,14 +5,20 @@ import InputField from './../inputs/InputField';
 import Password from '../inputs/Password';
 import Buttons from './../buttons/Buttons';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/Auth/auth.context';
+import { Watch } from '@material-ui/icons';
 
 const RegisterCard = () => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, watch } = useForm();
 
-  // const xContext = useContext(xContext)
-  // const {onSubmit} = xContext
+  const authContext = React.useContext(AuthContext);
+  const { registerUser } = AuthContext;
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data, event) => {
+    event.preventDefault();
+
+    console.log(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -31,11 +37,14 @@ const RegisterCard = () => {
           name='email'
           inputRef={register({
             required: 'This field is required',
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+              message: 'Please enter a properly formatted email',
+            },
           })}
           label='Email'
           variant='filled'
           errors={errors}
-          errorMessage='Please provide a properly formatted email'
         />
         <Password
           inputRef={register({
@@ -43,7 +52,19 @@ const RegisterCard = () => {
             minLength: 6,
           })}
           errors={errors}
+          name='password'
         />
+
+        <Password
+          inputRef={register({
+            required: true,
+            minLength: 6,
+            validate: (input) => input === watch('password'),
+          })}
+          errors={errors}
+          name='password2'
+        />
+
         <Buttons text='Register' fullWidth type='submit' />
       </Container>
       <div className='text-center'>

@@ -2,6 +2,7 @@ import React from 'react';
 import AuthContext from './auth.context';
 import AuthReducer from './auth.reducer';
 import { REGISTER, LOGIN } from './../types';
+import chirpsApiCall from './axiosApi';
 
 const AuthState = (props) => {
   const initialState = {
@@ -10,15 +11,24 @@ const AuthState = (props) => {
     isAuthenticated: false,
     loading: true,
     error: null,
+    success: null,
   };
 
   const [state, dispatch] = React.useReducer(AuthReducer, initialState);
 
-  const handleSubmit = () => {};
+  const onSubmit = () => dispatch();
 
-  const registerUser = () => dispatch({ type: REGISTER, payload });
+  const registerUser = async (formData) => {
+    const res = await chirpsApiCall.post('/users/register', formData);
+    console.log(res);
+    dispatch({ type: REGISTER, payload: res.data });
+  };
 
-  const login = () => dispatch({ type: LOGIN });
+  const login = async (formData) => {
+    const res = await chirpsApiCall.post('/auth/login', formData);
+
+    dispatch({ type: LOGIN, payload: res.data });
+  };
 
   const logout = () => dispatch({ type: LOGOUT });
 
@@ -30,6 +40,8 @@ const AuthState = (props) => {
         loading: state.loading,
         error: state.error,
         card: state.card,
+        registerUser,
+        login,
       }}
     >
       {props.children}

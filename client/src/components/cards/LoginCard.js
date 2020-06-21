@@ -17,10 +17,15 @@ const LoginCard = () => {
         <InputField
           id='email'
           name='email'
-          inputRef={register}
+          inputRef={register({
+            required: 'This field is required',
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+              message: 'Please enter a properly formatted email',
+            },
+          })}
           label='Email'
           variant='filled'
-          errorMessage='Please provide a properly formatted email'
           errors={errors}
         />
         <Password
